@@ -1,4 +1,4 @@
-This tool helps to Save resources in page to Cloud Storage.
+This tool helps to Save resources in page to [Qiniu Cloud Storage](http://qiniutek.com/ "Qiniu").
 ======
 
  * Author:   nighca
@@ -21,7 +21,7 @@ This tool helps to Save resources in page to Cloud Storage.
    
  1.  chrome -> 管理扩展程序 -> 载入正在开发的扩展程序 -> 选择extension文件夹
 
- 2.  chrome -> SaveAs -> 选项 -> 填入 accsessKey & secretKey, bucket
+ 2.  chrome -> SaveAs -> 选项 -> 填入 accsessKey & secretKey, bucket ([七牛云存储](http://qiniutek.com/ "Qiniu"))
 
  3.  remoteHost 默认 "http://saveas.ap01.aws.af.cm/", 可以自己搭建服务器，服务器代码在server/下，运行方式：
 
