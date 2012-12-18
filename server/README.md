@@ -1,9 +1,7 @@
-Spides
+Server of SaveAs
 ======
 
-It's a slide-tool based on Javascript &amp; HTML5.
-
-With writing simple html to create elegant slides.
+This is server for SaveAs (A chrome extension to save resource to Qiniu Cloud Storage)
 
  * Author:   nighca
 
@@ -14,11 +12,7 @@ With writing simple html to create elegant slides.
 
  * 服务端
  
-   node.js + express + ejs + mysql
-
- * 浏览器端
-   
-   jquery + jquery.transit
+   node.js + express + mysql
 
 依赖
 ----
