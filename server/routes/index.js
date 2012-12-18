@@ -112,7 +112,7 @@ exports.saveas = function(req, res){
 				*/
 
 				// 将bucket的内容作为静态内容发布
-				var DEMO_DOMAIN = bucket + '.dn.qbox.me';
+				var DEMO_DOMAIN = bucket + '.qiniudn.com';
 				rs.publish(DEMO_DOMAIN, function(resp){
 				    console.log("\n===> Publish result: ", resp);
 
