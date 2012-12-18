@@ -1,0 +1,32 @@
+{
+  "name": "nighca's SaveAs",
+  "version": "1.0",
+  "manifest_version": 2,
+
+  "background": { 
+    "scripts": [
+      "./assets/js/add-on/jquery-1.8.0.min.js",
+      "./assets/js/background.js"
+    ] 
+  },
+
+  "options_page": "./pages/options.html",
+
+  "permissions": [
+    "tabs", "contextMenus", "notifications", "http://*/*", "https://*/*"
+  ],
+
+  "browser_action": {
+      "default_icon":"icon.png",
+      "default_title": "NiTab",
+      "default_popup": "./pages/popup.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["./assets/js/content.js"]
+    }
+  ]
+
+}
