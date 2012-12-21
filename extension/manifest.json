@@ -15,6 +15,10 @@
   "permissions": [
     "tabs", "contextMenus", "notifications", "http://*/*", "https://*/*"
   ],
+  
+   "icons": {
+    "16": "icon.png"
+	},
 
   "browser_action": {
       "default_icon":"icon.png",
