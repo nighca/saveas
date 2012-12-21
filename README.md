@@ -10,7 +10,7 @@ This tool helps to Save resources in page to [Qiniu Cloud Storage](http://qiniut
 
  * 服务端
  
-   node.js + express + mysql
+   node.js + express
 
  * 客户端
 
