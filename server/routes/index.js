@@ -9,21 +9,10 @@ var fs = require('fs'),
 
 
 exports.index = function(req, res){
-	var fileURL = 'http://www.baidu.com/img/baidu_sylogo1.gif';
-	var filePath = 'temp_test';
 	var response = {};
 	
-	readOF.read(fileURL,filePath,function(data,error){ //Get the file
-	    if(error){
-	    	console.log("get remote file error: ", error);
-	    	response.ok = false;
-	    	response.data = error;
-	    	res.json(response);
-	    }else{
-	    	response.ok = true;
-	    	res.json(response);
-	    }
-	});
+	response.ok = true;
+	res.json(response);
 };
 
 exports.saveas = function(req, res){

@@ -5,9 +5,11 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 		var resource = request.resource;
 		var name = window.prompt("Save " + resource.type + " \"" + resource.url + "\" As:");
 
-		sendResponse({
-			name : name
-		});
+		if(name){
+			sendResponse({
+				name : name
+			});
+		}
 
 		return;
 	}
