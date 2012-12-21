@@ -1,13 +1,31 @@
 var default_cfg = {
-	remoteHost : "http://saveas.ap01.aws.af.cm/"
+	remoteHost : "http://saveas.nighca.me/"
 };
 if(!localStorage["remoteHost"])
  	localStorage["remoteHost"] = default_cfg.remoteHost;
 
+var keyWords = {"accessKey": true, "secretKey": true, "bucket": true, "remoteHost": true};
+
+
 var resource_list = function(){
 	var resources = [];
 	return {
+		load : function(){
+			for(var key in localStorage){
+				if(!(key in keyWords)){
+					var resource = {
+						name : key,
+						newUrl : localStorage[key]
+					};
+					this.add(resource);
+				}
+			}
+		},
 		add : function(resource){
+			var key = resource.name;
+			var value = resource.newUrl;
+			localStorage[key] = value;
+
 			return resources.push(resource);
 		},
 		getAll : function(){
@@ -15,6 +33,20 @@ var resource_list = function(){
 		}
 	}
 }();
+
+resource_list.load();
+
+function noticeFlash(type, content, imgUrl){
+	var notification = webkitNotifications.createNotification(
+	  	imgUrl, 
+	  	type, 
+	  	content
+	);
+	notification.show();
+	setTimeout(function(){
+		notification.cancel();
+	}, 4000);
+}
 
 function sendResource(resource){
 	var QNConfig = {
@@ -41,40 +73,16 @@ function sendResource(resource){
 		success: function(resp){
 			if(!resp.ok){
 				console.log("err:", resp);
-				var notification = webkitNotifications.createNotification(
-				  	resource.newUrl, 
-				  	'Fail', 
-				  	JSON.stringify(resp.data)
-				);
-				notification.show();
-				setTimeout(function(){
-					notification.cancel();
-				}, 3000);
+				noticeFlash('Fail', JSON.stringify(resp.data), resource.newUrl);
 			}else{
 				resource.newUrl = resp.data.url;
 				resource_list.add(resource);
-				var notification = webkitNotifications.createNotification(
-				  	resource.newUrl, 
-				  	'Success', 
-				  	resource.type + " saved!"
-				);
-				notification.show();
-				setTimeout(function(){
-					notification.cancel();
-				}, 3000);
+				noticeFlash('Success', resource.type + " saved!", resource.newUrl);
 			}
 		},
 		error: function(err){
 			console.log("err:", err);
-			var notification = webkitNotifications.createNotification(
-			  	null, 
-			  	'Fail', 
-			  	JSON.stringify(err)
-			);
-			notification.show();
-			setTimeout(function(){
-				notification.cancel();
-			}, 4000);
+			noticeFlash('Fail', JSON.stringify(err), null);
 		}
 	});	
 }
@@ -117,9 +125,15 @@ var createProperties = {
 		chrome.tabs.getSelected(null, function(tab) {
 			chrome.tabs.sendMessage(tab.id, {type: "notice" ,resource: resource}, function(response) {
 				//console.log(response);
-				if(response.name)
-					resource.name = response.name;
-					sendResource(resource);
+				if(response.name){
+					var name = response.name;
+					if(!(name in keyWords)){
+						resource.name = name;
+						sendResource(resource);
+					}else{
+						noticeFlash("Fail", "The name is forbidden, try another.", null);
+					}
+				}
 			});
 		});
 	}
