@@ -6,7 +6,6 @@ if(!localStorage["remoteHost"])
 
 var keyWords = {"accessKey": true, "secretKey": true, "bucket": true, "remoteHost": true};
 
-
 var resource_list = function(){
 	var resources = [];
 	return {
@@ -49,19 +48,26 @@ function noticeFlash(type, content, imgUrl){
 }
 
 function sendResource(resource){
-	var QNConfig = {
-		accessKey : localStorage["accessKey"] || null,
-		secretKey : localStorage["secretKey"] || null,
-		bucket : localStorage["bucket"] || null
-	}
+	
 
-	var remoteHost = localStorage["remoteHost"] || default_cfg.remoteHost;
-
-
-	if(!QNConfig.accessKey){
+	if(!localStorage["remoteHost"] || !localStorage["accessKey"] || !localStorage["secretKey"] || !localStorage["bucket"]){
 		alert("config needed!");
 		return false;
 	}
+	var remoteHost = localStorage["remoteHost"];
+
+	var opts = {
+	    scope: localStorage["bucket"],
+	    expires: 3600
+	};
+	var Generator = new UploadToken(opts);
+
+	var token =  Generator.generateToken();
+	var QNConfig = {
+		UploadToken : token, 
+		bucket : localStorage["bucket"] || null
+	}
+
 	$.ajax({
 		url: remoteHost,
 		type: "POST",

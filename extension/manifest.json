@@ -6,6 +6,10 @@
   "background": { 
     "scripts": [
       "./assets/js/add-on/jquery-1.8.0.min.js",
+      "./assets/js/add-on/crypto/rollups/hmac-sha1.js",
+      "./assets/js/add-on/crypto/components/core-min.js",
+      "./assets/js/add-on/crypto/components/enc-base64-min.js",
+      "./assets/js/add-on/auth.js",
       "./assets/js/background.js"
     ] 
   },
