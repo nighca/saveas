@@ -1,21 +1,105 @@
 <style type="text/css">
 
+body{
+	margin: 0;
+	font-family: Arial, "Microsoft YaHei", "STHeiti";
+}
+
+#title{
+	margin: 0;
+	padding: 30px;
+
+	background-color: #333;
+	color: #eee;
+}
+
+.author{
+	float:right;
+
+	color: #aaa;
+	font-weight:normal;
+
+	font-size: 12px;
+}
+
+.author a{
+	color: #eee;
+
+	text-decoration: none;
+	font-weight: bold;
+}
+
+#config_in{
+	padding: 10px;
+	width: 600px;
+
+	position: relative;
+	margin: 40px auto;
+}
+
+#config_in p{
+	position: relative;
+	margin: 30px 0 0;
+}
+
+.name{
+	position: absolute;
+	right: 0px;
+	padding: 8px;
+
+	font-weight: bold;
+	color: #666;
+	font-size: 14px;
+}
+
 input{
-	width: 400px;
-	padding: 5px;
+	width: 100%;
+	padding: 8px;
+	margin: 0;
+
+	border-style: none;
+	border-bottom: 1px solid #ccc;
+}
+
+input:focus{
+	outline: none;
+	background-color: #f0f0f0;
+}
+
+button{
+	padding: 8px 20px;
+
+	background-color: #333;
+	color: #fff;
+	border-style: none;
+
+	font-weight: bold;
+	cursor: pointer;
+}
+button:hover{
+	background-color: #444;
+}
+button:active{
+	background-color: #666;
 }
 
 </style>
 
-<h3>Settings</h3>
+<h4 id="title">
+	Options - SaveAs
+	<span class="author">Powered by <a href="http://nighca.me" target="_blank">
+		nighca
+	</a></span>
+</h4>
 
 <div id="config_in">
-	<p>remoteHost <input type="text" id="remoteHost_in" /></p>
+	<p><span class="name">remoteHost </span><input type="text" id="remoteHost_in" /></p>
 	<br/>
-	<p>accessKey <input type="text" id="accessKey_in" /></p>
-	<p>secretKey <input type="text" id="secretKey_in" /></p>
-	<p>bucket <input type="text" id="bucket_in" /></p>
-	<button id="submit_config">Save</button>
+	<p><span class="name">accessKey </span><input type="text" id="accessKey_in" /></p>
+	<p><span class="name">secretKey </span><input type="text" id="secretKey_in" /></p>
+	<p><span class="name">bucket </span><input type="text" id="bucket_in" /></p>
+	<p><span class="name"></span><button id="submit_config">Save</button></p>
+	
 </div>
 
 <script type="text/javascript" src="../assets/js/options.js"></script>

@@ -12,6 +12,16 @@ secretKey_in.value = localStorage["secretKey"] || "";
 bucket_in.value = localStorage["bucket"] || "";
 
 
+//chosen when focus
+var inputs = document.getElementsByTagName("input");
+for(var i=0,l=inputs.length;i<l;i++){
+	var input = inputs[i];
+	input.addEventListener("click", function (event) {
+		this.select();
+	});
+}
+
+
 var submit_config = document.getElementById("submit_config");
 submit_config.addEventListener("click", function(event){
 
