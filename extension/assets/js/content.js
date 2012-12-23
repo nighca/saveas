@@ -1,9 +1,8 @@
-
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
 	if(request.type === "notice"){
 		var resource = request.resource;
-		var name = window.prompt("Save " + resource.type + " \"" + resource.url + "\" As:");
+		var name = window.prompt("资源保存为：（唯一名称）");
 
 		if(name){
 			sendResponse({
