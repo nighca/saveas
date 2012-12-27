@@ -1,13 +1,14 @@
 //init
-var accessKey, secretKey, bucket;
 var config_in = document.getElementById("config_in");
 var remoteHost_in = document.getElementById("remoteHost_in");
 var accessKey_in = document.getElementById("accessKey_in");
 var secretKey_in = document.getElementById("secretKey_in");
+var domain_in = document.getElementById("domain_in");
 var bucket_in = document.getElementById("bucket_in");
 
 remoteHost_in.value = localStorage["remoteHost"] || "";
 accessKey_in.value = localStorage["accessKey"] || "";
+domain_in.value = localStorage["domain"] || "";
 secretKey_in.value = localStorage["secretKey"] || "";
 bucket_in.value = localStorage["bucket"] || "";
 
@@ -40,7 +41,7 @@ submit_config.addEventListener("click", function(event){
 				}
 			}catch(e){
 				console.log(e);
-				alert("Invalid remote host.");
+				alert("Invalid remote host. (no response)");
 			}
 			
 		}
@@ -48,6 +49,7 @@ submit_config.addEventListener("click", function(event){
 
 	localStorage["accessKey"] = accessKey_in.value;
 	localStorage["secretKey"] = secretKey_in.value;
+	localStorage["domain"] = domain_in.value;
 	localStorage["bucket"] = bucket_in.value;
 
 	//window.location.reload();

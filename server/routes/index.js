@@ -22,7 +22,7 @@ exports.saveas = function(req, res){
   	var resource = req.body.resource;
 
 	var fileURL = resource.url;
-	var filePath = "temp_" + resource.name;
+	var filePath = "temp_file";
 
 	var conn = new qiniu.digestauth.Client();
 
@@ -30,8 +30,11 @@ exports.saveas = function(req, res){
 	var rs = new qiniu.rs.Service(conn, bucket);
 
 	var uploadToken = config.UploadToken;
+
+
 	
 	var key = resource.name + resource.suffix;
+
 	var localFile = filePath,
 	    customMeta = "",
 	    callbackParams = {"bucket": bucket, "key": key},
@@ -57,10 +60,9 @@ exports.saveas = function(req, res){
 			        return;
 			    }
 
-				var DEMO_DOMAIN = bucket + '.qiniudn.com';
 			    response.ok = true;
 				response.data = {
-					url: "http://" + DEMO_DOMAIN + "/" + key
+					url: "http://" + config.domain + "/" + key
 				};
 				res.json(response);
 
