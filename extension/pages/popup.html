@@ -41,6 +41,8 @@ body{
 	color: #333;
 }
 #src_list a{
+	padding: 4px;
+
 	text-decoration: none;
 	color: #333;
 }
@@ -51,6 +53,22 @@ body{
 	font-weight: bold;
 	border-top: 1px solid transparent;
 }
+
+#src_list li .hide_op{
+	padding: 0 3px;
+
+	cursor: pointer;
+
+	color: #999;
+	visibility: hidden;
+}
+#src_list li:hover .hide_op{
+	visibility: visible;
+}
+#src_list li .hide_op:hover{
+	color: #333;
+}
+
 #src_list li img{
 	height: 1em;
 	width: auto;
