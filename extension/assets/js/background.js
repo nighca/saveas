@@ -4,12 +4,13 @@ var default_cfg = {
 if(!localStorage["remoteHost"])
  	localStorage["remoteHost"] = default_cfg.remoteHost;
 
-var keyWords = {"accessKey": true, "secretKey": true, "bucket": true, "remoteHost": true};
+var keyWords = {"accessKey": true, "secretKey": true, "bucket": true, "domain": true, "remoteHost": true};
 
 var resource_list = function(){
 	var resources = [];
 	return {
 		load : function(){
+			resources = [];
 			for(var key in localStorage){
 				if(!(key in keyWords)){
 					var resource = {
@@ -50,7 +51,7 @@ function noticeFlash(type, content, imgUrl){
 function sendResource(resource){
 	
 
-	if(!localStorage["remoteHost"] || !localStorage["accessKey"] || !localStorage["secretKey"] || !localStorage["bucket"]){
+	if(!localStorage["remoteHost"] || !localStorage["accessKey"] || !localStorage["secretKey"] || !localStorage["domain"] || !localStorage["bucket"]){
 		alert("config needed!");
 		return false;
 	}
@@ -58,14 +59,15 @@ function sendResource(resource){
 
 	var opts = {
 	    scope: localStorage["bucket"],
-	    expires: 3600
+	    expires: 60
 	};
 	var Generator = new UploadToken(opts);
 
 	var token =  Generator.generateToken();
 	var QNConfig = {
 		UploadToken : token, 
-		bucket : localStorage["bucket"] || null
+		bucket : localStorage["bucket"] || null,
+		domain : localStorage["domain"] || null
 	}
 
 	$.ajax({
@@ -102,26 +104,25 @@ var createProperties = {
 	contexts : ["image", "video", "audio"],
 	onclick : function(info, tab) {
 
-		var suffixMatch = /\.[a-zA-Z0-9]+(\?|\@)/;
-		var suffixMatch2 = /\.[a-zA-Z0-9]+$/;
+		var suffixMatch = /(\w+)(\.([a-zA-Z0-9]+)|)(\?|\@|$)/;
 		var suffix = "";
-		if(suffixMatch.exec(info.srcUrl)){
-			suffix = suffixMatch.exec(info.srcUrl)[0];
-			suffix = suffix.slice(0, suffix.length-1);
-		}else{
-			var temp = suffixMatch2.exec(info.srcUrl);
-			if(temp)
-				suffix = temp[0];
+		if(suffixMatch.test(info.srcUrl)){
+			var res = suffixMatch.exec(info.srcUrl);
+			console.log(res);
+			name = res[1];
+			suffix = res[2];
 		}
 
 		if(info.mediaType){ //"image", "video", "audio"
 			var resource = {
+				name : name,
 				url : info.srcUrl,
 				type : info.mediaType,
 				suffix : suffix
 			}
 		}else{ //"link"
 			var resource = {
+				name : name,
 				url : info.linkUrl,
 				type : "page",
 				suffix : suffix
@@ -132,9 +133,9 @@ var createProperties = {
 			chrome.tabs.sendMessage(tab.id, {type: "notice" ,resource: resource}, function(response) {
 				//console.log(response);
 				if(response.name){
-					var name = response.name;
-					if(!(name in keyWords)){
-						resource.name = name;
+					var new_name = response.name;
+					if(!(new_name in keyWords)){
+						resource.name = new_name;
 						sendResource(resource);
 					}else{
 						noticeFlash("Fail", "The name is forbidden, try another.", null);
@@ -160,6 +161,26 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 			ok : true,
 			resources : resource_list.getAll()
 		});
+
+		return;
+	}
+
+	if(request.type === "hide_resource"){ //send resources to popup
+		var resource = request.resource;
+
+		if(!localStorage[resource.name]){
+			sendResponse({
+				ok : false,
+				data : "no such resource (" + resource.name + ")"
+			});
+		}else{
+			delete localStorage[resource.name];
+			resource_list.load();
+			sendResponse({
+				ok : true,
+				data : "removed."
+			});
+		}
 
 		return;
 	}
