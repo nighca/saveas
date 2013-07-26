@@ -10,7 +10,6 @@
     "ejs": "*",
     "less-middleware": "*",
     "mysql": "*",
-    "qiniu": "*",
     "readof": "*"
   }
 }
