@@ -1,4 +1,4 @@
-This tool helps to Save resources in page to Cloud Storage.
+This tool helps to Save resources in page to Qiniu Cloud Storage.
 ======
 
  * Author:   nighca
@@ -14,12 +14,13 @@ This tool helps to Save resources in page to Cloud Storage.
 
 使用方法
 ----
-   
+
+ * 配置：右键saveas图标选择选项（Options），或者popup页面中点击标题“saveas”跳转到配置页面
+
  * 页面内资源（img, audio, video）右键 -> Save As... -> 键入保存文件名 -> 确定
  
  * 已保存资源可以在popup页面中查看（点击浏览器栏SaveAs图标）
 
-   
-
+ * popup页面中可以查看当前bucket所有文件，并进行下载/删除操作
 
 
