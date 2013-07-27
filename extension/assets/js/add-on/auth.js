@@ -1,3 +1,24 @@
+function utf16to8(str) {
+  var out, i, len, c;
+
+  out = "";
+  len = str.length;
+  for(i = 0; i < len; i++) {
+    c = str.charCodeAt(i);
+    if ((c >= 0x0001) && (c <= 0x007F)) {
+      out += str.charAt(i);
+    } else if (c > 0x07FF) {
+      out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+      out += String.fromCharCode(0x80 | ((c >>  6) & 0x3F));
+      out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
+    } else {
+      out += String.fromCharCode(0xC0 | ((c >>  6) & 0x1F));
+      out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
+    }
+  }
+  return out;
+}
+
 var BASE64={
 	
 	enKey: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
@@ -15,6 +36,7 @@ var BASE64={
 	
 	encode: function(src){
 		//用一个数组来存放编码后的字符，效率比用字符串相加高很多。
+		src = utf16to8(src);
 		var str=new Array();
 		var ch1, ch2, ch3;
 		var pos=0;
@@ -89,6 +111,9 @@ function UploadToken(opts) {
   this.callbackUrl = opts.callbackUrl || null;
   this.callbackBodyType = opts.callbackBodyType || null;
   this.customer = opts.customer || null;
+
+  this.accessKey = opts.accessKey;
+  this.secretKey = opts.secretKey;
 }
 
 UploadToken.prototype.generateSignature = function() {
@@ -104,7 +129,7 @@ UploadToken.prototype.generateSignature = function() {
 };
 
 UploadToken.prototype.generateEncodedDigest = function(signature) {
-  var hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA1, localStorage["secretKey"]);
+  var hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA1, this.secretKey);
 
   hmac.update(signature);
 
@@ -117,9 +142,8 @@ UploadToken.prototype.generateEncodedDigest = function(signature) {
 UploadToken.prototype.generateToken = function() {
   var signature = this.generateSignature();
   var encoded_digest = this.generateEncodedDigest(signature);
-  return localStorage["accessKey"] + ":" + encoded_digest + ":" + signature;
+  return this.accessKey + ":" + encoded_digest + ":" + signature;
 };
-
 
 // ------------------------------------------------------------------------------------------
 
@@ -160,18 +184,9 @@ var querystringify = function (obj, sep, eq, name) {
 }
 
 // func checksum
-function checksum(path, body) {
-  /*
-	var hmac = crypto.createHmac('sha1', conf.SECRET_KEY);
-	hmac.update(path + "\n");
-	if (body) {
-		hmac.update(body);
-	}
-	var digest = hmac.digest('base64');
-	return util.base64ToUrlsafe(digest);
-	*/
+function checksum(path, body, secretKey) {
 
-	var hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA1, localStorage["secretKey"]);
+	var hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA1, secretKey);
 
 	hmac.update(path + "\n");
 	if (body) {
@@ -184,18 +199,26 @@ function checksum(path, body) {
 	return base64ToUrlsafe(str);
 }
 
-function AccessToken(url, params) {
+function AccessToken(opts) {
+	var url = opts.url || '';
+	var params = opts.params || '';
 	var parse = url.match(/^(([a-z]+):\/\/)?([^\/\?#]+)\/*([^\?#]*)\??([^#]*)#?(\w*)$/i);  
 
-	this.path = parse[4];
+	this.path = '/' + parse[4];
+	if(parse[5]){
+		this.path += "?" + parse[5];
+	}
 	this.body = "";
 	if (typeof params === 'string') {
 		this.body = params;
 	} else {
 		this.body = querystringify(params);
 	}
+
+	this.accessKey = opts.accessKey;
+  	this.secretKey = opts.secretKey;
 }
 
 AccessToken.prototype.generateToken = function() {
-  return localStorage["accessKey"] + ':' + checksum(this.path, this.body);
+  return this.accessKey + ':' + checksum(this.path, this.body, this.secretKey);
 };

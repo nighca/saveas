@@ -1,15 +1,12 @@
 {
   "name": "SaveAs",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node app"
   },
   "dependencies": {
     "express": "3.0.0rc5",
-    "ejs": "*",
-    "less-middleware": "*",
-    "mysql": "*",
-    "readof": "*"
+    "qiniu": "*"
   }
 }
