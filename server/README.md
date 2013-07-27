@@ -25,6 +25,8 @@ This is server for SaveAs
 ----
    
    / 目录下
+
+   $ npm install
    
    $ node app.js
 

@@ -2,6 +2,7 @@
 body{
 	width: 400px;
 	max-height: 500px;
+	padding-bottom: 10px;
 
 	overflow: scroll;
 
@@ -14,6 +15,11 @@ body{
 
 	background-color: #333;
 	color: #eee;
+}
+
+#title > a{
+	color: inherit;
+	text-decoration: none;
 }
 
 .author{
@@ -54,7 +60,7 @@ body{
 	border-top: 1px solid transparent;
 }
 
-#src_list li .hide_op{
+#src_list li .remove_op{
 	padding: 0 3px;
 
 	cursor: pointer;
@@ -62,10 +68,10 @@ body{
 	color: #999;
 	visibility: hidden;
 }
-#src_list li:hover .hide_op{
+#src_list li:hover .remove_op{
 	visibility: visible;
 }
-#src_list li .hide_op:hover{
+#src_list li .remove_op:hover{
 	color: #333;
 }
 
@@ -90,18 +96,33 @@ body{
 	z-index: 100;
 }
 
+#info{
+	position: absolute;
+	bottom: 4px;
+	right: 14px;
+	margin: 0;
 
+	text-align: right;
+	font-weight: bold;
+	text-indent: 8px;
+	color: rgb(134, 134, 134);
+	font-size: 12px;
+	background-color: #fff;
+}
 
 </style>
 
 <body>
 	<h4 id="title">
-		SaveAs
+		<a href="./options.html" target="_blank">
+			SaveAs
+		</a>
 		<span class="author">Powered by <a href="http://nighca.me" target="_blank">nighca</a></span>
 	</h4>
 	<ul id="src_list">
 		
 	</ul>
+	<p id="info"></p>
 	
 	<script type="text/javascript" src="../assets/js/popup.js"></script>
 </body>

@@ -3,72 +3,80 @@
  * GET home page.
  */
 var fs = require('fs'),
-	qiniu = require('qiniu'),
-	readOF = require("readof");
+    qiniu = require('qiniu'),
+    readOF = require("../readof");
 
+var retFault = function(res, err){
+    console.error("err: ", err);
+    return res.json({
+        ok: false,
+        data: err
+    });
+};
 
+var retRes = function(res, data){
+    console.error("res: ", data);
+    return res.json({
+        ok: true,
+        data: data
+    });
+};
 
 exports.index = function(req, res){
-	var response = {};
-	
-	response.ok = true;
-	res.json(response);
+    retRes(res);
 };
 
 exports.saveas = function(req, res){
-	var response = {};
+    var config = req.body.config, 
+        resource = req.body.resource;
+    if(!config || !resource){
+        retFault(res, 'Param Wrong!');
+    }
 
-	var config = req.body.config;
-  	var resource = req.body.resource;
+    var bucket = config.bucket,
+        uploadToken = config.UploadToken,
+        key = resource.name,
+        fileURL = resource.url;
+    if(!bucket || !uploadToken || !key || !fileURL){
+        retFault(res, 'Param Wrong!');
+    }
 
-	var fileURL = resource.url;
-	var filePath = "temp_file";
+    var filePath = "temp" + parseInt(Math.random()*10000, 10);
 
-	var conn = new qiniu.digestauth.Client();
+    var conn = new qiniu.digestauth.Client();
+    var rs = new qiniu.rs.Service(conn, bucket);
 
-	var bucket = config.bucket;
-	var rs = new qiniu.rs.Service(conn, bucket);
+    var localFile = filePath,
+        customMeta = "",
+        callbackParams = {"bucket": bucket, "key": key},
+        enableCrc32Check = false,
+        mimeType = "application/octet-stream";
 
-	var uploadToken = config.UploadToken;
+    console.log(key);
+    readOF.read(fileURL,localFile,function(error, data){ //Get the file
+        if(error){
+            retFault(res, error);
+            return;
+        }
+        rs.uploadFileWithToken(
+            uploadToken, 
+            localFile, 
+            key, 
+            mimeType, 
+            customMeta, 
+            callbackParams, 
+            enableCrc32Check, 
+            function(resp){
+                fs.unlink(localFile);//delete the temp file
 
+                if (resp.code != 200) {
+                    retFault(res, resp);
+                    return;
+                }
 
-	
-	var key = resource.name + resource.suffix;
-
-	var localFile = filePath,
-	    customMeta = "",
-	    callbackParams = {"bucket": bucket, "key": key},
-	    enableCrc32Check = false,
-	    mimeType = "application/octet-stream";
-
-	
-	readOF.read(fileURL,filePath,function(data,error){ //Get the file
-	    if(error){
-	    	console.log("get remote file error: ", error);
-	    	response.ok = false;
-	    	response.data = error;
-	    	res.json(response);
-	    }else{
-			rs.uploadFileWithToken(uploadToken, localFile, key, mimeType, customMeta, callbackParams, enableCrc32Check, function(resp){
-			    fs.unlink(localFile);//delete the temp file
-
-			    console.log("\n===> Upload File with Token result: ", resp);
-			    if (resp.code != 200) {
-	    			response.ok = false;
-	    			response.data = resp;
-	    			res.json(response);
-			        return;
-			    }
-
-			    response.ok = true;
-				response.data = {
-					url: "http://" + config.domain + "/" + key
-				};
-				res.json(response);
-
-			});
-
-	    }
-	});
-
+                retRes(res, {
+                    url: "http://" + config.domain + "/" + key
+                });
+        });
+    });
 };
