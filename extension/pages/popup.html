@@ -1,3 +1,10 @@
+<html>
+<head>
+	<title>Files - SaveAs</title>
+</head>
+
+<body>
+
 <style type="text/css">
 body{
 	width: 400px;
@@ -38,6 +45,27 @@ body{
 	font-weight: bold;
 }
 
+.search{
+	float: right;
+	margin: 0;
+	height: 19px;
+	width: 50px;
+	padding: 0 5px;
+
+	border-radius: 10px;
+	border-style: none;
+	background-color: rgb(92, 92, 92);
+
+    -webkit-transition-duration: 200;
+}
+
+.search:focus{
+	width: 50%;
+	outline: none;
+	background-color: #f0f0f0;
+	box-shadow: inset 0 0 1px #000;
+}
+
 #src_list{
 	list-style-type: none;
 	padding: 4px;
@@ -45,24 +73,36 @@ body{
 
 	font-size: 12px;
 	color: #333;
-}
-#src_list a{
-	padding: 4px;
 
-	text-decoration: none;
-	color: #333;
+    -webkit-transition-duration: 100;
 }
+#src_list:hover{
+	color: #999;
+}
+
 #src_list li{
 	position: relative;
-	padding: 4px;
+	/*padding: 4px;*/
 
 	font-weight: bold;
 	border-top: 1px solid transparent;
+
+    -webkit-transition-duration: 300;
+}
+
+#src_list li:hover{
+	border-top: 1px solid #333;
+	color: #000;
 }
 
 #src_list li .remove_op{
-	padding: 0 3px;
+	display: inline-block;
+	padding: 4px;
+	width: 1em;
 
+	vertical-align: top;
+	line-height: 12px;
+	text-align: center;
 	cursor: pointer;
 
 	color: #999;
@@ -75,6 +115,14 @@ body{
 	color: #333;
 }
 
+#src_list li a{
+	display: inline-block;
+	padding: 4px;
+
+	color: inherit;
+	text-decoration: none;
+}
+
 #src_list li img{
 	height: 1em;
 	width: auto;
@@ -85,10 +133,7 @@ body{
 
 	background-color: #fff;
 }
-#src_list li:hover{
-	border-top: 1px solid #333;
-	color: #000;
-}
+
 #src_list li:hover img{
 	height: auto;
 	max-width: 200px;
@@ -112,12 +157,13 @@ body{
 
 </style>
 
-<body>
+
 	<h4 id="title">
 		<a href="./options.html" target="_blank">
 			SaveAs
 		</a>
-		<span class="author">Powered by <a href="http://nighca.me" target="_blank">nighca</a></span>
+		<!-- <span class="author">Powered by <a href="http://nighca.me" target="_blank">nighca</a></span> -->
+		<input id="search_in" class="search" type="text" />
 	</h4>
 	<ul id="src_list">
 		
@@ -127,3 +173,4 @@ body{
 	<script type="text/javascript" src="../assets/js/popup.js"></script>
 </body>
 
+</html>
