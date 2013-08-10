@@ -10,7 +10,9 @@ const MAX_LIST_NUM = 1000;
 
 var checkConfig = function(){
     if(!localStorage["remoteHost"] || !localStorage["accessKey"] || !localStorage["secretKey"] || !localStorage["domain"] || !localStorage["bucket"]){
-        alert("config needed!");
+        chrome.tabs.create({
+            url: './pages/options.html'
+        });
         return false;
     }
     return true;
