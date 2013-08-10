@@ -1,9 +1,9 @@
-Server of SaveAs
+Server of [SaveAs](https://github.com/nighca/saveas "SaveAs")
 ======
 
 This is server for SaveAs 
 
-(A chrome extension to save resource to [Qiniu Cloud Storage](http://qiniutek.com/ "Qiniu"))
+(A chrome extension to save & manage resource to [Qiniu Cloud Storage](http://www.qiniu.com/ "Qiniu"))
 
  * Author:   nighca
 
