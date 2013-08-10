@@ -1,4 +1,6 @@
 //init
+const ENTER_KEY_CODE = 13;
+
 var config_in = document.getElementById("config_in");
 var remoteHost_in = document.getElementById("remoteHost_in");
 var accessKey_in = document.getElementById("accessKey_in");
@@ -7,6 +9,8 @@ var domain_in = document.getElementById("domain_in");
 var bucket_in = document.getElementById("bucket_in");
 
 var infoWrapper = document.getElementById("info");
+
+var submit_config = document.getElementById("submit_config");
 
 var showInfo = function(info){
 	infoWrapper.innerHTML = info;
@@ -26,9 +30,29 @@ for(var i=0,l=inputs.length;i<l;i++){
 	input.addEventListener("click", function (event) {
 		this.select();
 	});
+	input.addEventListener("keyup", function (event) {
+		if(event.keyCode === ENTER_KEY_CODE){
+			for (var i = 0, l = inputs.length; i < l; i++) {
+				if(!inputs[i].value.trim()){
+					inputs[i].click();
+					break;
+				}
+			}
+			if(i === l){
+				this.blur();
+				submit_config.click();
+			}
+		}
+	});
 }
 
-var refreshConfig = function(){
+bucket_in.addEventListener("keyup", function(){
+	var bucket = this.value.trim();
+	var domain = bucket ? bucket + '.qiniudn.com' : '';
+	domain_in.value = domain;
+});
+
+var saveConfigAndRefresh = function(){
 	localStorage["remoteHost"] = remoteHost_in.value;
 	localStorage["accessKey"] = accessKey_in.value;
 	localStorage["secretKey"] = secretKey_in.value;
@@ -68,7 +92,6 @@ var checkServer = function(host, callback){
 	};
 };
 
-var submit_config = document.getElementById("submit_config");
 submit_config.addEventListener("click", function(event){
 	showInfo("...");
 
@@ -79,10 +102,10 @@ submit_config.addEventListener("click", function(event){
 				showInfo(err);
 				return;
 			}
-			refreshConfig();
+			saveConfigAndRefresh();
 		});
 	}else{
 		showInfo('Without remote server, you will not be able to save file.');
-		refreshConfig();
+		saveConfigAndRefresh();
 	}
 });
