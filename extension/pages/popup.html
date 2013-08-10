@@ -6,10 +6,17 @@
 <body>
 
 <style type="text/css">
+html{
+	padding: 10px;
+	max-height: 600px;
+}
 body{
-	width: 400px;
-	max-height: 500px;
+	min-width: 400px;
+	max-width: 600px;
 	padding-bottom: 10px;
+
+	position: relative;
+	margin: 0 auto;
 
 	overflow: scroll;
 
@@ -24,7 +31,7 @@ body{
 	color: #eee;
 }
 
-#title > a{
+#title .text{
 	color: inherit;
 	text-decoration: none;
 }
@@ -49,7 +56,7 @@ body{
 	float: right;
 	margin: 0;
 	height: 19px;
-	width: 50px;
+	width: 15%;
 	padding: 0 5px;
 
 	border-radius: 10px;
@@ -62,8 +69,53 @@ body{
 .search:focus{
 	width: 50%;
 	outline: none;
-	background-color: #f0f0f0;
+	background-color: rgb(153, 153, 153);
 	box-shadow: inset 0 0 1px #000;
+}
+
+.qr-off, .qr-on{
+	display: inline-block;
+	float: right;
+	margin-right: 10px;
+	width: 19px;
+	height: 19px;
+
+	font-size: 10px;
+	line-height: 19px;
+	text-align: center;
+
+	background-color: rgb(92, 92, 92);
+	border-radius: 10px;
+	color: #333;
+	cursor: pointer;
+
+	overflow: hidden;
+
+    -webkit-transition-duration: 200;
+}
+
+.qr-off:hover, .qr-on{
+	color: rgb(68, 68, 68);
+	background-color: rgb(153, 153, 153);
+
+	text-shadow: 0 0 1px #666;
+	box-shadow: inset 0 0 1px #000;
+}
+
+.goto{
+	float: right;
+	margin-right: 10px;
+
+	line-height: 19px;
+
+	font-size: 10px;
+	color: rgb(92, 92, 92);
+
+    -webkit-transition-duration: 100;
+}
+
+.goto:hover{
+	color: rgb(153, 153, 153);
 }
 
 #src_list{
@@ -123,7 +175,7 @@ body{
 	text-decoration: none;
 }
 
-#src_list li img{
+#src_list li .thumb{
 	height: 1em;
 	width: auto;
 	position: absolute;
@@ -134,9 +186,37 @@ body{
 	background-color: #fff;
 }
 
-#src_list li:hover img{
+#src_list.qr li .thumb{
+	display: none;
+}
+
+#src_list li:hover .thumb{
 	height: auto;
-	max-width: 200px;
+	width: 50%;
+
+	z-index: 100;
+}
+
+#src_list li .qrcode{
+	height: 1em;
+	width: auto;
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	padding-bottom: 4px;
+
+	display: none;
+
+	background-color: #fff;
+}
+
+#src_list.qr li .qrcode{
+	display: block;
+}
+
+#src_list li:hover .qrcode{
+	height: auto;
+	width: 50%;
 
 	z-index: 100;
 }
@@ -159,13 +239,17 @@ body{
 
 
 	<h4 id="title">
-		<a href="./options.html" target="_blank">
+		<span class="text">
 			SaveAs
-		</a>
+		</span>
+		
 		<!-- <span class="author">Powered by <a href="http://nighca.me" target="_blank">nighca</a></span> -->
 		<input id="search_in" class="search" type="text" />
+		<i id="qr_checker" class="qr-off">QR</i>
+		<a href="./options.html" target="_blank" class="goto">Opt</a>
+		<a href="" target="_blank" class="goto">Goto</a>
 	</h4>
-	<ul id="src_list">
+	<ul id="src_list" class="">
 		
 	</ul>
 	<p id="info"></p>
