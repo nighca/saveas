@@ -1,0 +1,7 @@
+body{margin:0;font-family:Arial,"Microsoft YaHei","STHeiti"}
+#title{margin:0;padding:30px;line-height:24px;font-size:20px;background-color:#333;color:#eee}#title .author{float:right;color:#aaa;font-weight:normal;font-size:12px}#title .author a{color:#eee;text-decoration:none;font-weight:bold}
+#config_in{padding:10px;width:600px;position:relative;margin:40px auto}#config_in p{position:relative;margin:30px 0 0}#config_in p .name{position:absolute;right:0;padding:8px;font-weight:bold;color:#666;font-size:14px}
+#config_in p input{width:100%;padding:8px;margin:0;border-style:none;border-bottom:1px solid #ccc}#config_in p input:focus{outline:none;background-color:#f0f0f0}
+#config_in p button{padding:8px 20px;background-color:#333;color:#fff;border-style:none;font-weight:bold;cursor:pointer}#config_in p button:hover{background-color:#444}
+#config_in p button:active{background-color:#666}
+#config_in p #info{display:inline-block;padding:4px;margin:2px 2px 2px 10px;vertical-align:bottom;font-size:12px;color:#444}
