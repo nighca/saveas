@@ -105,6 +105,7 @@ var removeItem = function(event){
 };
 
 var classNameByWidth = Str(function(width){
+	showInfo(width);
 	if(width >= 800){
 		return 'normal';
 	}else{
@@ -113,7 +114,11 @@ var classNameByWidth = Str(function(width){
 	return '';
 }, Num);
 
-document.body.className = classNameByWidth(window.innerWidth);
+var adjustBodyClass = function(){
+	document.body.className = classNameByWidth(window.innerWidth);
+};
+
+window.onresize = window.onload = adjustBodyClass;
 
 getResources();
 

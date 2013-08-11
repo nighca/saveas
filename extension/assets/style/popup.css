@@ -1,4 +1,4 @@
-body{position:relative;font-family:Arial,"Microsoft YaHei","STHeiti"}body.small{min-width:400px;max-height:600px;padding-bottom:10px;overflow:scroll}
+body{min-width:400px;position:relative;font-family:Arial,"Microsoft YaHei","STHeiti"}body.small{max-height:600px;padding-bottom:10px;overflow:scroll}
 body.normal{margin:0}body.normal #title{padding:30px;line-height:24px;font-size:20px}body.normal #title .search{width:100px;border-radius:12px}body.normal #title .search:focus{width:300px}
 body.normal #title .qr-off,body.normal #title .qr-on{width:24px;border-radius:12px}
 body.normal #title .search,body.normal #title .qr-off,body.normal #title .qr-on,body.normal #title .goto{height:24px;line-height:24px;font-size:12px}
