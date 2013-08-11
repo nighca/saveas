@@ -104,6 +104,17 @@ var removeItem = function(event){
 	});
 };
 
+var classNameByWidth = Str(function(width){
+	if(width >= 800){
+		return 'normal';
+	}else{
+		return 'small';
+	}
+	return '';
+}, Num);
+
+document.body.className = classNameByWidth(window.innerWidth);
+
 getResources();
 
 search_in.addEventListener('keyup', function(e){
