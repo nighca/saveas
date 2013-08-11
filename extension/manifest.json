@@ -5,16 +5,16 @@
 
   "background": { 
     "scripts": [
-      "./assets/js/add-on/jquery-1.8.0.min.js",
-      "./assets/js/add-on/crypto/rollups/hmac-sha1.js",
-      "./assets/js/add-on/crypto/components/core-min.js",
-      "./assets/js/add-on/crypto/components/enc-base64-min.js",
-      "./assets/js/add-on/auth.js",
-      "./assets/js/background/config.js",
-      "./assets/js/background/resource-op.js",
-      "./assets/js/background/browser-op.js",
-      "./assets/js/background/main.js",
-      "./assets/js/background/communicate.js"
+      "./assets/script/add-on/jquery-1.8.0.min.js",
+      "./assets/script/add-on/crypto/rollups/hmac-sha1.js",
+      "./assets/script/add-on/crypto/components/core-min.js",
+      "./assets/script/add-on/crypto/components/enc-base64-min.js",
+      "./assets/script/add-on/auth.js",
+      "./assets/script/background/config.js",
+      "./assets/script/background/resource-op.js",
+      "./assets/script/background/browser-op.js",
+      "./assets/script/background/main.js",
+      "./assets/script/background/communicate.js"
     ] 
   },
 
@@ -37,7 +37,7 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["./assets/js/content.js"]
+      "js": ["./assets/script/content.js"]
     }
   ]
 
