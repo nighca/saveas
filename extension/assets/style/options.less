@@ -1,0 +1,100 @@
+body{
+	margin: 0;
+	font-family: Arial, "Microsoft YaHei", "STHeiti";
+}
+
+#title{
+	margin: 0;
+	padding: 30px;
+
+	line-height: 24px;
+	font-size: 20px;
+
+	background-color: #333;
+	color: #eee;
+
+	.author{
+		float:right;
+
+		color: #aaa;
+		font-weight:normal;
+
+		font-size: 12px;
+
+		a{
+			color: #eee;
+
+			text-decoration: none;
+			font-weight: bold;
+		}
+	}
+}
+
+
+
+#config_in{
+	padding: 10px;
+	width: 600px;
+
+	position: relative;
+	margin: 40px auto;
+
+	p{
+		position: relative;
+		margin: 30px 0 0;
+
+		.name{
+			position: absolute;
+			right: 0px;
+			padding: 8px;
+
+			font-weight: bold;
+			color: #666;
+			font-size: 14px;
+		}
+
+		input{
+			width: 100%;
+			padding: 8px;
+			margin: 0;
+
+			border-style: none;
+			border-bottom: 1px solid #ccc;
+
+			&:focus{
+				outline: none;
+				background-color: #f0f0f0;
+			}
+		}
+
+		button{
+			padding: 8px 20px;
+
+			background-color: #333;
+			color: #fff;
+			border-style: none;
+
+			font-weight: bold;
+			cursor: pointer;
+
+			&:hover{
+				background-color: #444;
+			}
+			&:active{
+				background-color: #666;
+			}
+		}
+
+		#info{
+			display: inline-block;
+			padding: 4px;
+			margin: 2px 2px 2px 10px;
+			vertical-align: bottom;
+
+			font-size: 12px;
+			color: #444;
+		}
+	}
+}
+
+
