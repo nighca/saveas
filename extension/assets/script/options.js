@@ -1,5 +1,6 @@
 //init
 const ENTER_KEY_CODE = 13;
+const QINIU_DEFAULT_DOMAIN = 'bucket.u.qiniudn.com';
 
 var config_in = document.getElementById("config_in");
 var remoteHost_in = document.getElementById("remoteHost_in");
@@ -48,7 +49,7 @@ for(var i=0,l=inputs.length;i<l;i++){
 
 bucket_in.addEventListener("keyup", function(){
 	var bucket = this.value.trim();
-	var domain = bucket ? bucket + '.qiniudn.com' : '';
+	var domain = bucket ? QINIU_DEFAULT_DOMAIN.replace(/bucket/g, bucket) : '';
 	domain_in.value = domain;
 });
 
