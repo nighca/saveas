@@ -105,7 +105,7 @@ var removeItem = function(event){
 };
 
 var classNameByWidth = Str(function(width){
-	showInfo(width);
+	//showInfo(width);
 	if(width >= 800){
 		return 'normal';
 	}else{
